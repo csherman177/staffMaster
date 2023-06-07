@@ -81,7 +81,7 @@ const viewRoles = () => {
 // Function to Show All Employees - Join table to add id, name, title, dept, salary, reporting mgr
 const viewEmployees = () => {
   console.log("Showing all employees...\n");
-  const sql = `SELECT * FROM employee left join role on employee.role_id=role.id left join department on role.department_id=department.id left join employee AS manager on manager.id = employee.manager_id`;
+  const sql = `SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.name FROM employee left join role on employee.role_id=role.id join department on role.department_id=department.id left join employee manager on manager.id = employee.manager_id`;
 
   db.query(sql, (err, rows) => {
     if (err) throw err;
@@ -200,8 +200,7 @@ const updateEmployees = () => {
         params.push(employee);
         const roleSql = `SELECT * FROM role`;
 
-
-  // Function to Update Role - UPDATE Statement
+        // Function to Update Role - UPDATE Statement
         db.query(roleSql, (err, data) => {
           if (err) throw err;
           const roles = data.map(({ id, title }) => ({
@@ -234,7 +233,5 @@ const updateEmployees = () => {
       });
   });
 };
-
-
 
 questions();
